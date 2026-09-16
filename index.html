@@ -1,0 +1,2787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Leucas aspera — Botanical Field Study</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#f3f0e8;
+    color:#1c2a21;
+    font-family:"DM Sans",sans-serif;
+    overflow-x:hidden;
+}
+
+img{
+    width:100%;
+    display:block;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button{
+    font:inherit;
+}
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root{
+
+    --paper:#f3f0e8;
+    --paper-dark:#e9e4d8;
+
+    --ink:#1c2a21;
+    --muted:#6f786f;
+
+    --green:#254b35;
+    --green-light:#68816b;
+
+    --line:rgba(28,42,33,.18);
+
+    --serif:"DM Serif Display",serif;
+}
+
+
+/* =========================================================
+   PAGE LOADER
+========================================================= */
+
+.loader{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+
+    background:var(--paper);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
+}
+
+.loader.hidden{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader-inner{
+    text-align:center;
+}
+
+.loader-name{
+    font-family:var(--serif);
+    font-size:34px;
+}
+
+.loader-line{
+    width:120px;
+    height:1px;
+    background:var(--green);
+
+    margin:20px auto;
+
+    animation:
+        loaderLine 1.2s ease infinite;
+}
+
+@keyframes loaderLine{
+
+    0%{
+        transform:scaleX(0);
+        transform-origin:left;
+    }
+
+    50%{
+        transform:scaleX(1);
+        transform-origin:left;
+    }
+
+    100%{
+        transform:scaleX(0);
+        transform-origin:right;
+    }
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.nav{
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+
+    padding:24px 5vw;
+
+    z-index:100;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    background:
+        linear-gradient(
+            rgba(243,240,232,.94),
+            rgba(243,240,232,.70),
+            transparent
+        );
+
+    backdrop-filter:blur(8px);
+
+    transition:.4s ease;
+}
+
+.nav.scrolled{
+    padding-top:16px;
+    padding-bottom:16px;
+
+    background:rgba(243,240,232,.94);
+
+    border-bottom:1px solid var(--line);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    font-size:13px;
+    letter-spacing:2px;
+    font-weight:600;
+}
+
+.brand-mark{
+    width:28px;
+    height:28px;
+
+    border:1px solid var(--green);
+
+    border-radius:50%;
+
+    display:grid;
+    place-items:center;
+
+    font-family:var(--serif);
+    font-size:16px;
+}
+
+.nav-links{
+    display:flex;
+    gap:30px;
+
+    font-size:12px;
+    letter-spacing:1px;
+
+    color:var(--muted);
+}
+
+.nav-links a{
+    position:relative;
+}
+
+.nav-links a::after{
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    bottom:-6px;
+
+    width:100%;
+    height:1px;
+
+    background:var(--green);
+
+    transform:scaleX(0);
+    transform-origin:right;
+
+    transition:.35s ease;
+}
+
+.nav-links a:hover::after{
+    transform:scaleX(1);
+    transform-origin:left;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    min-height:100vh;
+
+    padding:
+        140px
+        5vw
+        70px;
+
+    display:grid;
+
+    grid-template-columns:
+        .85fr
+        1.15fr;
+
+    gap:7vw;
+
+    align-items:center;
+}
+
+.hero-copy{
+    padding-bottom:40px;
+}
+
+.kicker{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    font-size:11px;
+    letter-spacing:2.5px;
+
+    color:var(--green);
+
+    margin-bottom:28px;
+}
+
+.kicker::before{
+    content:"";
+
+    width:34px;
+    height:1px;
+
+    background:var(--green);
+}
+
+.hero h1{
+    font-family:var(--serif);
+
+    font-weight:400;
+
+    font-size:
+        clamp(
+            68px,
+            9vw,
+            145px
+        );
+
+    line-height:.82;
+
+    letter-spacing:-4px;
+}
+
+.hero h1 em{
+    color:var(--green);
+
+    font-style:italic;
+}
+
+.hero-intro{
+    max-width:480px;
+
+    margin-top:35px;
+
+    font-size:17px;
+
+    line-height:1.8;
+
+    color:var(--muted);
+}
+
+.hero-meta{
+    margin-top:38px;
+
+    display:flex;
+    gap:30px;
+
+    font-size:11px;
+
+    letter-spacing:1.5px;
+
+    color:var(--muted);
+}
+
+.hero-meta strong{
+    display:block;
+
+    color:var(--ink);
+
+    margin-bottom:5px;
+
+    font-weight:500;
+}
+
+.hero-image-wrap{
+    position:relative;
+
+    height:
+        min(
+            76vh,
+            760px
+        );
+
+    overflow:hidden;
+}
+
+.hero-image{
+    height:110%;
+
+    object-fit:cover;
+
+    object-position:center;
+
+    transform:
+        translateY(-5%);
+
+    transition:
+        transform 1.5s cubic-bezier(.2,.7,.2,1);
+}
+
+.hero-image-wrap:hover .hero-image{
+    transform:
+        translateY(-5%)
+        scale(1.025);
+}
+
+.image-caption{
+    position:absolute;
+
+    bottom:20px;
+    left:20px;
+
+    padding:9px 12px;
+
+    background:rgba(243,240,232,.9);
+
+    font-size:10px;
+
+    letter-spacing:1px;
+
+    color:var(--muted);
+}
+
+
+/* =========================================================
+   SCROLL INDICATOR
+========================================================= */
+
+.scroll-note{
+    position:absolute;
+
+    left:5vw;
+    bottom:30px;
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    font-size:10px;
+    letter-spacing:2px;
+
+    color:var(--muted);
+}
+
+.scroll-line{
+    width:60px;
+    height:1px;
+
+    background:var(--line);
+
+    position:relative;
+}
+
+.scroll-line::after{
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:20px;
+    height:1px;
+
+    background:var(--green);
+
+    animation:
+        scrollMove 2s ease infinite;
+}
+
+@keyframes scrollMove{
+
+    0%{
+        left:0;
+    }
+
+    50%{
+        left:40px;
+    }
+
+    100%{
+        left:0;
+    }
+
+}
+
+
+/* =========================================================
+   COMMON SECTIONS
+========================================================= */
+
+.section{
+    padding:
+        140px
+        5vw;
+}
+
+.section-head{
+    display:grid;
+
+    grid-template-columns:
+        120px
+        1fr;
+
+    gap:30px;
+
+    margin-bottom:70px;
+}
+
+.section-index{
+    font-size:11px;
+
+    letter-spacing:2px;
+
+    color:var(--green);
+
+    padding-top:13px;
+
+    border-top:1px solid var(--green);
+}
+
+.section-title{
+    font-family:var(--serif);
+
+    font-size:
+        clamp(
+            48px,
+            6vw,
+            88px
+        );
+
+    line-height:.95;
+
+    font-weight:400;
+
+    max-width:900px;
+}
+
+.section-lead{
+    max-width:620px;
+
+    margin-top:25px;
+
+    font-size:16px;
+
+    line-height:1.8;
+
+    color:var(--muted);
+}
+
+
+/* =========================================================
+   INTRODUCTION
+========================================================= */
+
+.introduction{
+    background:#e8e4d8;
+}
+
+.intro-grid{
+    display:grid;
+
+    grid-template-columns:
+        1.1fr
+        .9fr;
+
+    gap:7vw;
+
+    align-items:center;
+}
+
+.intro-photo{
+    height:650px;
+
+    overflow:hidden;
+}
+
+.intro-photo img{
+    height:100%;
+
+    object-fit:cover;
+
+    transition:
+        transform 1.2s cubic-bezier(.2,.7,.2,1);
+}
+
+.intro-photo:hover img{
+    transform:scale(1.035);
+}
+
+.intro-copy{
+    max-width:580px;
+}
+
+.intro-copy h3{
+    font-family:var(--serif);
+
+    font-size:42px;
+
+    font-weight:400;
+
+    line-height:1.1;
+}
+
+.intro-copy p{
+    margin-top:25px;
+
+    color:var(--muted);
+
+    line-height:1.9;
+}
+
+.pullquote{
+    margin-top:50px;
+
+    padding-top:25px;
+
+    border-top:1px solid var(--line);
+
+    font-family:var(--serif);
+
+    font-size:25px;
+
+    line-height:1.4;
+}
+
+
+/* =========================================================
+   TAXONOMY
+========================================================= */
+
+.taxonomy-layout{
+    display:grid;
+
+    grid-template-columns:
+        .65fr
+        1.35fr;
+
+    gap:8vw;
+}
+
+.taxon-note{
+    font-family:var(--serif);
+
+    font-size:30px;
+
+    line-height:1.35;
+}
+
+.taxon-note em{
+    color:var(--green);
+}
+
+.taxonomy-list{
+    border-top:1px solid var(--line);
+}
+
+.tax-row{
+    display:grid;
+
+    grid-template-columns:
+        150px
+        1fr;
+
+    gap:30px;
+
+    padding:23px 0;
+
+    border-bottom:1px solid var(--line);
+
+    transition:.3s;
+}
+
+.tax-row:hover{
+    padding-left:12px;
+}
+
+.tax-label{
+    font-size:10px;
+
+    text-transform:uppercase;
+
+    letter-spacing:2px;
+
+    color:var(--muted);
+}
+
+.tax-value{
+    font-family:var(--serif);
+
+    font-size:24px;
+}
+
+
+/* =========================================================
+   MORPHOLOGY
+========================================================= */
+
+.morphology{
+    background:#203c2b;
+
+    color:#f3f0e8;
+}
+
+.morphology .section-index{
+    color:#b9cdb9;
+
+    border-color:#b9cdb9;
+}
+
+.morphology .section-lead{
+    color:#c0c8c0;
+}
+
+.morph-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:1px;
+
+    background:rgba(255,255,255,.2);
+}
+
+.morph-card{
+    background:#203c2b;
+
+    min-height:430px;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.morph-card img{
+    height:100%;
+
+    object-fit:cover;
+
+    opacity:.68;
+
+    transition:
+        transform .8s ease,
+        opacity .5s ease;
+}
+
+.morph-card:hover img{
+    transform:scale(1.06);
+
+    opacity:.9;
+}
+
+.morph-overlay{
+    position:absolute;
+
+    inset:0;
+
+    padding:28px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:flex-end;
+
+    background:
+        linear-gradient(
+            transparent 35%,
+            rgba(17,35,25,.92)
+        );
+}
+
+.morph-number{
+    font-size:10px;
+
+    letter-spacing:2px;
+
+    color:#c6d6c8;
+}
+
+.morph-card h3{
+    font-family:var(--serif);
+
+    font-size:34px;
+
+    font-weight:400;
+
+    margin-top:8px;
+}
+
+.morph-card p{
+    font-size:13px;
+
+    line-height:1.6;
+
+    color:#ccd3cd;
+
+    margin-top:10px;
+}
+
+
+/* =========================================================
+   HABITAT
+========================================================= */
+
+.habitat-image{
+    position:relative;
+
+    height:650px;
+
+    overflow:hidden;
+}
+
+.habitat-image img{
+    height:115%;
+
+    object-fit:cover;
+
+    transform:
+        translateY(-7%);
+}
+
+.habitat-label{
+    position:absolute;
+
+    left:30px;
+    bottom:30px;
+
+    background:var(--paper);
+
+    padding:15px 18px;
+
+    font-size:11px;
+
+    letter-spacing:1px;
+}
+
+.habitat-info{
+    margin-top:60px;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    border-top:1px solid var(--line);
+}
+
+.habitat-stat{
+    padding:30px 20px 0;
+
+    border-right:1px solid var(--line);
+}
+
+.habitat-stat:last-child{
+    border-right:none;
+}
+
+.habitat-stat strong{
+    display:block;
+
+    font-family:var(--serif);
+
+    font-size:30px;
+
+    font-weight:400;
+}
+
+.habitat-stat span{
+    display:block;
+
+    margin-top:8px;
+
+    font-size:11px;
+
+    letter-spacing:1px;
+
+    color:var(--muted);
+}
+
+
+/* =========================================================
+   TRADITIONAL KNOWLEDGE
+========================================================= */
+
+.knowledge{
+    background:#e7e1d3;
+}
+
+.knowledge-grid{
+    display:grid;
+
+    grid-template-columns:
+        .8fr
+        1.2fr;
+
+    gap:8vw;
+}
+
+.knowledge-statement{
+    font-family:var(--serif);
+
+    font-size:
+        clamp(
+            35px,
+            4vw,
+            60px
+        );
+
+    line-height:1.05;
+}
+
+.knowledge-statement em{
+    color:var(--green);
+}
+
+.knowledge-items{
+    border-top:1px solid var(--line);
+}
+
+.knowledge-item{
+    padding:30px 0;
+
+    border-bottom:1px solid var(--line);
+
+    display:grid;
+
+    grid-template-columns:60px 1fr;
+
+    gap:20px;
+}
+
+.knowledge-number{
+    font-size:11px;
+
+    color:var(--green);
+
+    padding-top:6px;
+}
+
+.knowledge-item h3{
+    font-family:var(--serif);
+
+    font-size:28px;
+
+    font-weight:400;
+}
+
+.knowledge-item p{
+    margin-top:10px;
+
+    line-height:1.7;
+
+    color:var(--muted);
+
+    font-size:14px;
+}
+
+
+/* =========================================================
+   RESEARCH / EVIDENCE
+========================================================= */
+
+.evidence-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:20px;
+}
+
+.evidence-card{
+    padding:35px;
+
+    min-height:320px;
+
+    border:1px solid var(--line);
+
+    transition:
+        transform .4s ease,
+        background .4s ease;
+}
+
+.evidence-card:hover{
+    transform:translateY(-7px);
+
+    background:#e9e5db;
+}
+
+.evidence-tag{
+    font-size:10px;
+
+    letter-spacing:2px;
+
+    color:var(--green);
+}
+
+.evidence-card h3{
+    margin-top:55px;
+
+    font-family:var(--serif);
+
+    font-size:35px;
+
+    font-weight:400;
+}
+
+.evidence-card p{
+    margin-top:15px;
+
+    color:var(--muted);
+
+    line-height:1.7;
+
+    font-size:14px;
+}
+
+
+/* =========================================================
+   FIELD STUDY
+========================================================= */
+
+.field-study{
+    background:#f8f5ed;
+}
+
+.field-layout{
+    display:grid;
+
+    grid-template-columns:
+        1fr
+        1fr;
+
+    gap:20px;
+}
+
+.field-large{
+    height:650px;
+
+    overflow:hidden;
+}
+
+.field-large img{
+    height:100%;
+
+    object-fit:cover;
+}
+
+.field-side{
+    display:grid;
+
+    grid-template-rows:
+        1fr
+        1fr;
+
+    gap:20px;
+}
+
+.field-small{
+    overflow:hidden;
+}
+
+.field-small img{
+    height:100%;
+
+    object-fit:cover;
+
+    transition:.8s ease;
+}
+
+.field-small:hover img{
+    transform:scale(1.04);
+}
+
+
+/* =========================================================
+   CONSERVATION
+========================================================= */
+
+.conservation{
+    background:#203c2b;
+
+    color:#f3f0e8;
+}
+
+.conservation .section-index{
+    color:#b9cdb9;
+
+    border-color:#b9cdb9;
+}
+
+.conservation .section-lead{
+    color:#c4ccc5;
+}
+
+.conservation-path{
+    margin-top:70px;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(5,1fr);
+
+    border-top:1px solid rgba(255,255,255,.3);
+}
+
+.path-item{
+    padding:35px 20px;
+
+    border-right:1px solid rgba(255,255,255,.2);
+
+    position:relative;
+}
+
+.path-item:last-child{
+    border-right:none;
+}
+
+.path-number{
+    color:#b9cdb9;
+
+    font-size:10px;
+
+    letter-spacing:2px;
+}
+
+.path-item h3{
+    font-family:var(--serif);
+
+    font-size:28px;
+
+    font-weight:400;
+
+    margin-top:40px;
+}
+
+.path-item p{
+    margin-top:12px;
+
+    color:#c4ccc5;
+
+    font-size:13px;
+
+    line-height:1.6;
+}
+
+
+/* =========================================================
+   SOURCES
+========================================================= */
+
+.sources{
+    padding-bottom:80px;
+}
+
+.source-list{
+    border-top:1px solid var(--line);
+
+    max-width:1000px;
+}
+
+.source{
+    padding:20px 0;
+
+    border-bottom:1px solid var(--line);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:30px;
+
+    font-size:13px;
+}
+
+.source span{
+    color:var(--muted);
+}
+
+.source a{
+    color:var(--green);
+
+    text-decoration:underline;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+    background:#16291d;
+
+    color:#dce4dd;
+
+    padding:
+        80px 5vw
+        40px;
+}
+
+.footer-top{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    gap:40px;
+}
+
+.footer-title{
+    font-family:var(--serif);
+
+    font-size:50px;
+
+    font-weight:400;
+}
+
+.footer-note{
+    max-width:400px;
+
+    color:#aab6ad;
+
+    font-size:12px;
+
+    line-height:1.7;
+}
+
+.footer-bottom{
+    margin-top:80px;
+
+    padding-top:20px;
+
+    border-top:1px solid rgba(255,255,255,.15);
+
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:10px;
+
+    color:#89988e;
+}
+
+
+/* =========================================================
+   REVEAL ANIMATIONS
+========================================================= */
+
+.reveal{
+    opacity:0;
+
+    transform:translateY(35px);
+
+    transition:
+        opacity .9s ease,
+        transform .9s cubic-bezier(.2,.7,.2,1);
+}
+
+.reveal.visible{
+    opacity:1;
+
+    transform:translateY(0);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:900px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .hero{
+        grid-template-columns:1fr;
+
+        padding-top:120px;
+    }
+
+    .hero-image-wrap{
+        height:70vh;
+
+        order:-1;
+    }
+
+    .hero h1{
+        font-size:72px;
+    }
+
+    .scroll-note{
+        display:none;
+    }
+
+    .section-head{
+        grid-template-columns:1fr;
+    }
+
+    .intro-grid,
+    .taxonomy-layout,
+    .knowledge-grid{
+        grid-template-columns:1fr;
+    }
+
+    .morph-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .evidence-grid{
+        grid-template-columns:1fr;
+    }
+
+    .field-layout{
+        grid-template-columns:1fr;
+    }
+
+    .field-large{
+        height:500px;
+    }
+
+    .field-side{
+        height:500px;
+    }
+
+    .habitat-info{
+        grid-template-columns:1fr;
+    }
+
+    .habitat-stat{
+        border-right:none;
+
+        border-bottom:1px solid var(--line);
+    }
+
+    .conservation-path{
+        grid-template-columns:1fr;
+    }
+
+    .path-item{
+        border-right:none;
+
+        border-bottom:1px solid rgba(255,255,255,.2);
+    }
+
+    .footer-top,
+    .footer-bottom{
+        flex-direction:column;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .hero{
+        padding-left:22px;
+        padding-right:22px;
+    }
+
+    .section{
+        padding:
+            90px 22px;
+    }
+
+    .hero h1{
+        font-size:60px;
+
+        letter-spacing:-2px;
+    }
+
+    .hero-meta{
+        flex-direction:column;
+
+        gap:15px;
+    }
+
+    .intro-photo{
+        height:480px;
+    }
+
+    .morph-grid{
+        grid-template-columns:1fr;
+    }
+
+    .morph-card{
+        min-height:420px;
+    }
+
+    .source{
+        flex-direction:column;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     LOADER
+===================================================== -->
+
+<div class="loader" id="loader">
+
+    <div class="loader-inner">
+
+        <div class="loader-name">
+            Leucas aspera
+        </div>
+
+        <div class="loader-line"></div>
+
+        <small>
+            BOTANICAL FIELD STUDY
+        </small>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<header class="nav" id="nav">
+
+    <a href="#" class="brand">
+
+        <span class="brand-mark">
+            L
+        </span>
+
+        LEUCAS / FIELD STUDY
+
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="#identity">
+            Identity
+        </a>
+
+        <a href="#morphology">
+            Morphology
+        </a>
+
+        <a href="#habitat">
+            Habitat
+        </a>
+
+        <a href="#knowledge">
+            Knowledge
+        </a>
+
+        <a href="#conservation">
+            Conservation
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<main>
+
+<section class="hero">
+
+    <div class="hero-copy reveal">
+
+        <div class="kicker">
+            BOTANICAL FIELD STUDY
+        </div>
+
+        <h1>
+            Leucas
+            <br>
+            <em>aspera</em>
+        </h1>
+
+        <p class="hero-intro">
+
+            A small annual herb of the mint family,
+            known across India by many local names and
+            surrounded by generations of traditional knowledge.
+
+        </p>
+
+
+        <div class="hero-meta">
+
+            <div>
+
+                <strong>
+                    FAMILY
+                </strong>
+
+                Lamiaceae
+
+            </div>
+
+            <div>
+
+                <strong>
+                    HABIT
+                </strong>
+
+                Annual herb
+
+            </div>
+
+            <div>
+
+                <strong>
+                    RANGE
+                </strong>
+
+                Tropical Asia
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-image-wrap reveal">
+
+        <img
+            class="hero-image"
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Leucas%20aspera%20of%20Kadavoor.jpg"
+            alt="Leucas aspera plant with white flowers"
+        >
+
+        <div class="image-caption">
+            Leucas aspera · Kadavoor, Kerala
+        </div>
+
+    </div>
+
+
+    <div class="scroll-note">
+
+        <span class="scroll-line"></span>
+
+        SCROLL TO EXPLORE
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     INTRODUCTION
+===================================================== -->
+
+<section class="section introduction">
+
+    <div class="intro-grid">
+
+        <div class="intro-photo reveal">
+
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:FilePath/Leucas%20aspera%20plant.jpg"
+                alt="Leucas aspera showing flowers, leaves and stem"
+                loading="lazy"
+            >
+
+        </div>
+
+
+        <div class="intro-copy reveal">
+
+            <div class="section-index">
+                01 / THE PLANT
+            </div>
+
+            <h2>
+                Easy to overlook.
+                <br>
+                Difficult to ignore.
+            </h2>
+
+            <p>
+
+                Leucas aspera is an erect, diffusely branched
+                annual herb belonging to the Lamiaceae family.
+                Its small white flowers appear in dense whorls
+                around the stem, while its narrow leaves give
+                the plant a distinctly rough appearance.
+
+            </p>
+
+            <p>
+
+                It is commonly encountered in open areas,
+                roadsides, fallow fields and other disturbed
+                habitats.
+
+            </p>
+
+
+            <div class="pullquote">
+
+                “A familiar plant can hold an unfamiliar
+                amount of knowledge.”
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     TAXONOMY
+===================================================== -->
+
+<section class="section" id="identity">
+
+    <div class="section-head reveal">
+
+        <div class="section-index">
+            02 / IDENTITY
+        </div>
+
+        <div>
+
+            <h2 class="section-title">
+                The scientific identity
+                of the plant.
+            </h2>
+
+            <p class="section-lead">
+
+                The accepted botanical name is
+                <em>Leucas aspera</em> (Willd.) Link.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="taxonomy-layout">
+
+        <div class="taxon-note reveal">
+
+            A member of the
+            <em>mint family</em>,
+            but visually unlike
+            the herbs most people
+            associate with it.
+
+        </div>
+
+
+        <div class="taxonomy-list reveal">
+
+            <div class="tax-row">
+
+                <div class="tax-label">
+                    Kingdom
+                </div>
+
+                <div class="tax-value">
+                    Plantae
+                </div>
+
+            </div>
+
+
+            <div class="tax-row">
+
+                <div class="tax-label">
+                    Phylum
+                </div>
+
+                <div class="tax-value">
+                    Tracheophyta
+                </div>
+
+            </div>
+
+
+            <div class="tax-row">
+
+                <div class="tax-label">
+                    Class
+                </div>
+
+                <div class="tax-value">
+                    Magnoliopsida
+                </div>
+
+            </div>
+
+
+            <div class="tax-row">
+
+                <div class="tax-label">
+                    Order
+                </div>
+
+                <div class="tax-value">
+                    Lamiales
+                </div>
+
+            </div>
+
+
+            <div class="tax-row">
+
+                <div class="tax-label">
+                    Family
+                </div>
+
+                <div class="tax-value">
+                    Lamiaceae
+                </div>
+
+            </div>
+
+
+            <div class="tax-row">
+
+                <div class="tax-label">
+                    Genus
+                </div>
+
+                <div class="tax-value">
+                    Leucas
+                </div>
+
+            </div>
+
+
+            <div class="tax-row">
+
+                <div class="tax-label">
+                    Species
+                </div>
+
+                <div class="tax-value">
+                    <em>Leucas aspera</em>
+                </div>
+
+            </div>
+
+
+            <div class="tax-row">
+
+                <div class="tax-label">
+                    Authority
+                </div>
+
+                <div class="tax-value">
+                    (Willd.) Link
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     MORPHOLOGY
+===================================================== -->
+
+<section class="section morphology" id="morphology">
+
+    <div class="section-head reveal">
+
+        <div class="section-index">
+            03 / MORPHOLOGY
+        </div>
+
+        <div>
+
+            <h2 class="section-title">
+                Look closer.
+            </h2>
+
+            <p class="section-lead">
+
+                The easiest way to recognise
+                <em>Leucas aspera</em> is to look
+                at its combination of hairy leaves,
+                angular stem and compact white
+                flower whorls.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="morph-grid">
+
+
+        <article class="morph-card reveal">
+
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:FilePath/Leucas%20aspera%20plant.jpg"
+                alt="Leucas aspera stem and leaves"
+                loading="lazy"
+            >
+
+            <div class="morph-overlay">
+
+                <div class="morph-number">
+                    01 / STEM
+                </div>
+
+                <h3>
+                    Stem
+                </h3>
+
+                <p>
+                    Upright, branched and characteristically
+                    hairy, giving the plant a rough texture.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <article class="morph-card reveal">
+
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:FilePath/Leucas%20aspera%2001.jpg"
+                alt="Leucas aspera leaves and flowers"
+                loading="lazy"
+            >
+
+            <div class="morph-overlay">
+
+                <div class="morph-number">
+                    02 / LEAVES
+                </div>
+
+                <h3>
+                    Leaves
+                </h3>
+
+                <p>
+                    Narrow, linear to oblong leaves occur
+                    in opposite pairs along the stem.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <article class="morph-card reveal">
+
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:FilePath/Leucas%20aspera%20of%20Kadavoor.jpg"
+                alt="White flowers of Leucas aspera"
+                loading="lazy"
+            >
+
+            <div class="morph-overlay">
+
+                <div class="morph-number">
+                    03 / FLOWER
+                </div>
+
+                <h3>
+                    Flower
+                </h3>
+
+                <p>
+                    Small white flowers form dense,
+                    rounded whorls around the stem.
+                </p>
+
+            </div>
+
+        </article>
+
+
+        <article class="morph-card reveal">
+
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:FilePath/Leucas%20aspera%20plant.jpg"
+                alt="Leucas aspera flower buds and plant"
+                loading="lazy"
+            >
+
+            <div class="morph-overlay">
+
+                <div class="morph-number">
+                    04 / FRUIT
+                </div>
+
+                <h3>
+                    Fruit
+                </h3>
+
+                <p>
+                    The fruit consists of small nutlets,
+                    characteristic of the mint family.
+                </p>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     HABITAT
+===================================================== -->
+
+<section class="section" id="habitat">
+
+    <div class="section-head reveal">
+
+        <div class="section-index">
+            04 / HABITAT
+        </div>
+
+        <div>
+
+            <h2 class="section-title">
+                Where the wild herb
+                belongs.
+            </h2>
+
+            <p class="section-lead">
+
+                In India, the plant can be found in plains,
+                roadsides, fallow fields, wastelands and
+                other open habitats.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="habitat-image reveal">
+
+        <img
+            src="https://commons.wikimedia.org/wiki/Special:FilePath/Leucas%20aspera%2001.jpg"
+            alt="Leucas aspera growing in its natural environment"
+            loading="lazy"
+        >
+
+        <div class="habitat-label">
+            FIELD OBSERVATION · INDIA
+        </div>
+
+    </div>
+
+
+    <div class="habitat-info reveal">
+
+        <div class="habitat-stat">
+
+            <strong>
+                India
+            </strong>
+
+            <span>
+                WIDESPREAD DISTRIBUTION
+            </span>
+
+        </div>
+
+
+        <div class="habitat-stat">
+
+            <strong>
+                Tropical Asia
+            </strong>
+
+            <span>
+                NATIVE RANGE
+            </span>
+
+        </div>
+
+
+        <div class="habitat-stat">
+
+            <strong>
+                Open habitats
+            </strong>
+
+            <span>
+                COMMON HABITAT TYPE
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     TRADITIONAL KNOWLEDGE
+===================================================== -->
+
+<section class="section knowledge" id="knowledge">
+
+    <div class="knowledge-grid">
+
+        <div class="knowledge-statement reveal">
+
+            A plant is not only
+            a biological object.
+
+            <br><br>
+
+            It can also be a
+            <em>piece of cultural memory.</em>
+
+        </div>
+
+
+        <div class="knowledge-items">
+
+
+            <article class="knowledge-item reveal">
+
+                <div class="knowledge-number">
+                    01
+                </div>
+
+                <div>
+
+                    <h3>
+                        Traditional names
+                    </h3>
+
+                    <p>
+
+                        The plant is known by different
+                        vernacular names across regions,
+                        including Thumba/Thumbai and
+                        Sanskrit Dronapushpi.
+
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="knowledge-item reveal">
+
+                <div class="knowledge-number">
+                    02
+                </div>
+
+                <div>
+
+                    <h3>
+                        Traditional medicine
+                    </h3>
+
+                    <p>
+
+                        Various traditional systems describe
+                        medicinal applications for the plant.
+                        Such traditional uses should be
+                        distinguished from clinically proven
+                        treatments.
+
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="knowledge-item reveal">
+
+                <div class="knowledge-number">
+                    03
+                </div>
+
+                <div>
+
+                    <h3>
+                        Ethnobotanical knowledge
+                    </h3>
+
+                    <p>
+
+                        Knowledge about plants can be passed
+                        through families and communities,
+                        making documentation an important
+                        part of cultural conservation.
+
+                    </p>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SCIENCE
+===================================================== -->
+
+<section class="section">
+
+    <div class="section-head reveal">
+
+        <div class="section-index">
+            05 / SCIENCE
+        </div>
+
+        <div>
+
+            <h2 class="section-title">
+                What does science
+                actually tell us?
+            </h2>
+
+            <p class="section-lead">
+
+                Scientific literature has investigated
+                phytochemicals and biological activities
+                associated with <em>Leucas aspera</em>.
+                Evidence should be presented carefully,
+                without turning traditional claims into
+                unsupported medical promises.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="evidence-grid">
+
+
+        <article class="evidence-card reveal">
+
+            <div class="evidence-tag">
+                PHYTOCHEMISTRY
+            </div>
+
+            <h3>
+                Plant compounds
+            </h3>
+
+            <p>
+
+                Published studies have reported various
+                phytochemical constituents from different
+                parts of the plant.
+
+            </p>
+
+        </article>
+
+
+        <article class="evidence-card reveal">
+
+            <div class="evidence-tag">
+                RESEARCH
+            </div>
+
+            <h3>
+                Biological activity
+            </h3>
+
+            <p>
+
+                Laboratory research has investigated
+                several biological activities of extracts
+                and isolated compounds.
+
+            </p>
+
+        </article>
+
+
+        <article class="evidence-card reveal">
+
+            <div class="evidence-tag">
+                IMPORTANT
+            </div>
+
+            <h3>
+                Evidence matters
+            </h3>
+
+            <p>
+
+                Traditional medicinal use and laboratory
+                findings do not by themselves establish
+                that a plant can cure a disease.
+
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FIELD STUDY
+===================================================== -->
+
+<section class="section field-study">
+
+    <div class="section-head reveal">
+
+        <div class="section-index">
+            06 / FIELD STUDY
+        </div>
+
+        <div>
+
+            <h2 class="section-title">
+                This is where
+                your research begins.
+            </h2>
+
+            <p class="section-lead">
+
+                Replace these photographs with your own
+                field observations. This section can become
+                the visual heart of your NCSC project.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="field-layout">
+
+        <div class="field-large reveal">
+
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:FilePath/Leucas%20aspera%20of%20Kadavoor.jpg"
+                alt="Leucas aspera field photograph"
+                loading="lazy"
+            >
+
+        </div>
+
+
+        <div class="field-side">
+
+            <div class="field-small reveal">
+
+                <img
+                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Leucas%20aspera%20plant.jpg"
+                    alt="Leucas aspera specimen"
+                    loading="lazy"
+                >
+
+            </div>
+
+
+            <div class="field-small reveal">
+
+                <img
+                    src="https://commons.wikimedia.org/wiki/Special:FilePath/Leucas%20aspera%2001.jpg"
+                    alt="Leucas aspera flowering plant"
+                    loading="lazy"
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CONSERVATION
+===================================================== -->
+
+<section class="section conservation" id="conservation">
+
+    <div class="section-head reveal">
+
+        <div class="section-index">
+            07 / SUSTAINABILITY
+        </div>
+
+        <div>
+
+            <h2 class="section-title">
+                From knowledge
+                to conservation.
+            </h2>
+
+            <p class="section-lead">
+
+                Your NCSC project can move beyond describing
+                the plant and propose practical ways to
+                document traditional knowledge, monitor
+                local populations and encourage responsible
+                use.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="conservation-path">
+
+
+        <div class="path-item reveal">
+
+            <div class="path-number">
+                01
+            </div>
+
+            <h3>
+                Document
+            </h3>
+
+            <p>
+                Record local names,
+                uses and traditional knowledge.
+            </p>
+
+        </div>
+
+
+        <div class="path-item reveal">
+
+            <div class="path-number">
+                02
+            </div>
+
+            <h3>
+                Validate
+            </h3>
+
+            <p>
+                Compare traditional knowledge
+                with scientific literature.
+            </p>
+
+        </div>
+
+
+        <div class="path-item reveal">
+
+            <div class="path-number">
+                03
+            </div>
+
+            <h3>
+                Monitor
+            </h3>
+
+            <p>
+                Record plant occurrence and
+                population observations.
+            </p>
+
+        </div>
+
+
+        <div class="path-item reveal">
+
+            <div class="path-number">
+                04
+            </div>
+
+            <h3>
+                Cultivate
+            </h3>
+
+            <p>
+                Encourage responsible cultivation
+                instead of unnecessary wild collection.
+            </p>
+
+        </div>
+
+
+        <div class="path-item reveal">
+
+            <div class="path-number">
+                05
+            </div>
+
+            <h3>
+                Educate
+            </h3>
+
+            <p>
+                Share reliable information with
+                the local community.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SOURCES
+===================================================== -->
+
+<section class="section sources">
+
+    <div class="section-head reveal">
+
+        <div class="section-index">
+            08 / SOURCES
+        </div>
+
+        <div>
+
+            <h2 class="section-title">
+                Botanical records,
+                not invented facts.
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="source-list">
+
+
+        <div class="source">
+
+            <strong>
+                India Flora Online
+            </strong>
+
+            <span>
+                Botanical description & distribution
+            </span>
+
+        </div>
+
+
+        <div class="source">
+
+            <strong>
+                Wikimedia Commons
+            </strong>
+
+            <span>
+                Botanical photographs
+            </span>
+
+        </div>
+
+
+        <div class="source">
+
+            <strong>
+                Plants of the World Online
+            </strong>
+
+            <span>
+                Taxonomic reference
+            </span>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div class="footer-top">
+
+        <div class="footer-title">
+            LEUCAS
+        </div>
+
+
+        <div class="footer-note">
+
+            A student-led botanical field study exploring
+            the science, traditional knowledge and
+            sustainability of <em>Leucas aspera</em>.
+
+            <br><br>
+
+            This website is an educational project and
+            does not provide medical advice.
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <span>
+            NCSC · LIFESTYLE FOR ENVIRONMENT
+        </span>
+
+        <span>
+            PHOTOGRAPHS USED UNDER CC BY-SA 4.0
+        </span>
+
+    </div>
+
+</footer>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+window.addEventListener(
+    "load",
+    () => {
+
+        setTimeout(
+            () => {
+
+                document
+                    .getElementById("loader")
+                    .classList
+                    .add("hidden");
+
+            },
+            600
+        );
+
+    }
+);
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+const nav =
+    document.getElementById("nav");
+
+window.addEventListener(
+    "scroll",
+    () => {
+
+        if(window.scrollY > 50){
+
+            nav.classList.add("scrolled");
+
+        }else{
+
+            nav.classList.remove("scrolled");
+
+        }
+
+    },
+    {passive:true}
+);
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const observer =
+    new IntersectionObserver(
+        entries => {
+
+            entries.forEach(
+                entry => {
+
+                    if(entry.isIntersecting){
+
+                        entry.target
+                            .classList
+                            .add("visible");
+
+                        observer.unobserve(
+                            entry.target
+                        );
+
+                    }
+
+                }
+            );
+
+        },
+        {
+            threshold:.12
+        }
+    );
+
+
+document
+    .querySelectorAll(".reveal")
+    .forEach(
+        element => observer.observe(element)
+    );
+
+
+/* =========================================================
+   IMAGE PARALLAX
+========================================================= */
+
+const parallaxImages =
+    document.querySelectorAll(
+        ".hero-image, .habitat-image img"
+    );
+
+
+function updateParallax(){
+
+    const viewportHeight =
+        window.innerHeight;
+
+
+    parallaxImages.forEach(
+        image => {
+
+            const rect =
+                image
+                    .parentElement
+                    .getBoundingClientRect();
+
+
+            if(
+                rect.bottom < 0 ||
+                rect.top > viewportHeight
+            ){
+
+                return;
+
+            }
+
+
+            const progress =
+                (viewportHeight - rect.top)
+                /
+                (viewportHeight + rect.height);
+
+
+            const movement =
+                (progress - .5) * 45;
+
+
+            image.style.transform =
+                `translateY(${movement}px)`;
+
+        }
+    );
+
+}
+
+
+window.addEventListener(
+    "scroll",
+    updateParallax,
+    {passive:true}
+);
+
+updateParallax();
+
+
+/* =========================================================
+   SMOOTH IMAGE HOVER DEPTH
+========================================================= */
+
+document
+    .querySelectorAll(".morph-card")
+    .forEach(card => {
+
+        card.addEventListener(
+            "mousemove",
+            event => {
+
+                const rect =
+                    card.getBoundingClientRect();
+
+                const x =
+                    (event.clientX - rect.left)
+                    /
+                    rect.width;
+
+                const y =
+                    (event.clientY - rect.top)
+                    /
+                    rect.height;
+
+
+                const image =
+                    card.querySelector("img");
+
+
+                image.style.transform =
+                    `
+                    scale(1.035)
+                    translate(
+                        ${(x-.5)*8}px,
+                        ${(y-.5)*8}px
+                    )
+                    `;
+
+            }
+        );
+
+
+        card.addEventListener(
+            "mouseleave",
+            () => {
+
+                const image =
+                    card.querySelector("img");
+
+                image.style.transform =
+                    "";
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+if(
+    window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+    ).matches
+){
+
+    document
+        .querySelectorAll(".reveal")
+        .forEach(
+            element => {
+
+                element.classList.add(
+                    "visible"
+                );
+
+            }
+        );
+
+}
+
+</script>
+
+</body>
+</html>
